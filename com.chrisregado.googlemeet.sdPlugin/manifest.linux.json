@@ -1,0 +1,8 @@
+{
+	"CodePathLin": "dist/linux/main/main",
+	"OS": [
+		{
+			"Platform": "linux"
+		}
+	]
+}

@@ -2,11 +2,11 @@
 
 ![Screenshot](keys_screenshot.png)
 
-This is a plugin that allows the [Elgato Stream Deck](https://www.elgato.com/en/gaming/stream-deck) to control your camera and microphone in a Google Meet call. It provides toggle buttons that show whether your camera and mic are on or off, and they update whenever you press a Stream Deck button or mute/unmute directly in Meet. It also provides some other buttons to control various elements of the Meet web UI.
+Control Google Meet from your [Elgato Stream Deck](https://www.elgato.com/en/gaming/stream-deck). Toggle your camera and microphone with a single key press, even when Meet is hidden behind other windows. The Stream Deck buttons light up to show your current on/off status, and stay in sync when you mute yourself directly in Meet. Additional buttons control other parts of the meeting, like raising your hand or leaving the call.
 
-This plugin works in conjuction with our Google Chrome / Mozilla Firefox browser extension, which is required for this plugin to function.
+**This plugin requires a companion browser extension to function. See [Installing](#installing) below.**
 
-Developed and tested primarily on macOS 26, Python 3.13, Chrome 148, and Stream Deck app v7.4. It should work on Windows or in Firefox as well. Experimental compatibility with Linux is available via [OpenDeck](https://github.com/nekename/OpenDeck).
+Supported platforms: Works on macOS and Windows, with both Chrome and Firefox. Linux is experimentally supported via [OpenDeck](https://github.com/nekename/OpenDeck).
 
 ## Installing
 
@@ -30,10 +30,10 @@ softwareupdate --install-rosetta --agree-to-license
     2. From Firefox's extension settings page (`about:addons`), click the Settings cogwheel at the top-right of the page, click "Install Add-on From File...", and select the `.xpi` file that you just downloaded.
     3. Click "Add" on the Firefox popup to allow the extension to install.
 
-4. If you use an ad blocker (such as uBlock Origin with the EasyPrivacy filter list), you may have to add meet.google.com as a trusted site in your blocker's settings to allow the browser Extension to work. (Some filters block websockets to 127.0.0.1, which this extension needs to communicate with the Stream Deck.)
+4. If you use an ad blocker (such as uBlock Origin with the EasyPrivacy filter list), you may have to add meet.google.com as a trusted site in your blocker's settings to allow the browser extension to work. (Some filters block websockets to localhost, which this extension needs to communicate with the Stream Deck.)
 5. Add some buttons to your Stream Deck, and start a Google Meet call to try them out!
 
-It's safe to delete the `com.chrisregado.googlemeet.streamDeckPlugin` file once it's installed. However, on Windows, you may need to quit the Stream Deck desktop software (by right clicking its icon in the Windows task tray and clicking Quit) and re-launch it to avoid "action can't be completed because the file is open" errors.
+It's safe to delete the `com.chrisregado.googlemeet.streamDeckPlugin` file once it's installed, but the unzipped Chrome extension folder must be kept in the same place as when you installed it.
 
 ## Updating
 
@@ -54,6 +54,7 @@ In the Stream Deck desktop app, right click on one of the Google Meet actions in
 ## Troubleshooting
 
 * If Chrome won't let you enable the extension because it was not installed from the web store, you may need to allowlist the extension. On Windows, you can do this by editing the registry. Under both `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\ExtensionInstallWhitelist` and `HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\ExtensionInstallAllowlist` add a string value, with the name "1" (or a greater number if "1" already exists). The value should be the extension ID, which you can get from [chrome://extensions/](chrome://extensions/) with Developer Mode on. If this does not work or you're on another operating system, you may find [this post](https://superuser.com/questions/767286/re-enable-extensions-not-coming-from-chrome-web-store-on-chrome-v35-with-enhan#) helpful.
+* On Windows, if deleting the `com.chrisregado.googlemeet.streamDeckPlugin` file after installation results in an "action can't be completed because the file is open" error, quit the Stream Deck desktop software by right clicking its icon in the Windows task tray and clicking Quit Stream Deck, then re-launch the app. Now you should be able to delete the installer.
 
 ## Linux Compatibility via OpenDeck
 
@@ -75,7 +76,7 @@ The Stream Deck plugin code is in the `streamdeck-plugin` directory. The browser
 
 You can use other Websocket software to interact with the browser extension, for example to debug the extension without a Stream Deck.
 
-Use [wsbroad](https://github.com/vi/wsbroad/) to launch a Websocket server that the extension will also connect to:
+For example, use [wsbroad](https://github.com/vi/wsbroad/) to launch a Websocket server that the extension will also connect to:
 
 ```
 wsbroad 127.0.0.1:2394
@@ -262,7 +263,7 @@ We have the following commands:
 
 Feel free to contribute a feature or bug fix by opening a pull request. If you discover any problems or have any suggestions, please open a GitHub Issue.
 
-Please note that this is a side project for me, so it may take some time (possibly weeks) to get a response to your PR or Issue.
+Please note that this is a side project for me which I consider to be in maintenance mode, so it may take some time (possibly weeks) to get any response to your PR or Issue. I try to prioritize fixes when Google makes breaking changes to the Meet UI, but I very rarely add new features.
 
 ## Credits
 
